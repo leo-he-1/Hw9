@@ -31,6 +31,14 @@ const Tab = createBottomTabNavigator();
 export default function App() {
 const[authToken, setAuthToken] = useState();
 
+const resetData = async () =>{
+  try {
+    await AsyncStorage.setItem('AuthToken','');
+  }catch(e){
+    console.log('Data did not save');
+  }
+}
+
 const saveData = async () =>{
   try {
     await AsyncStorage.setItem('AuthToken','Lasha');
@@ -56,6 +64,10 @@ saveData();
       <Button
         title="Login to Dashboard"
         onPress={() => getData()}
+      /> 
+      <Button
+        title="Logout"
+        onPress={() => [resetData(),getData()]}
       /> 
       <Tab.Navigator>
         {authToken === 'Lasha' ? (
